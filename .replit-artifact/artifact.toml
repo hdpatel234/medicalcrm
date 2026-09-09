@@ -1,0 +1,28 @@
+kind = "web"
+previewPath = "/"
+title = "Medical Commerce CRM"
+description = "A frontend-only admin workspace for running a medical and healthcare product e-commerce business, with catalog, inventory, orders, customers, marketing, and operational reporting workflows powered by realistic mock data."
+version = "1.0.0"
+id = "artifacts/medical-commerce-crm"
+router = "path"
+
+[[services]]
+name = "web"
+paths = [ "/" ]
+localPort = 24690
+
+[services.development]
+run = "pnpm --filter @workspace/medical-commerce-crm run dev"
+
+[services.production]
+build = [ "pnpm", "--filter", "@workspace/medical-commerce-crm", "run", "build" ]
+serve = "static"
+publicDir = "artifacts/medical-commerce-crm/dist/public"
+
+[[services.production.rewrites]]
+from = "/*"
+to = "/index.html"
+
+[services.env]
+PORT = "24690"
+BASE_PATH = "/"
